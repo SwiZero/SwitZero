@@ -834,7 +834,7 @@ footer .legal{font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;col
 <footer>
   <span class="logo"><span class="cross" aria-hidden="true"></span><span class="word">SwitZero<span class="reg">®</span></span></span>
   <span class="legal" data-i18n="ftr.legal">© 2026 SwitZero · Conçu en Suisse</span>
-  <span class="site-ver" aria-hidden="true">V2.98</span>
+  <span class="site-ver" aria-hidden="true">V2.99</span>
 </footer>
 
 <script>
@@ -982,13 +982,24 @@ const langBtn=document.getElementById('langBtn');
 if(langBtn){
   langBtn.addEventListener('click',e=>{e.stopPropagation();const open=langWrap.classList.toggle('open');langBtn.setAttribute('aria-expanded',open);});
   document.querySelectorAll('#langMenu button').forEach(b=>{
-    b.addEventListener('click',()=>{applyLang(b.getAttribute('data-lang'));langWrap.classList.remove('open');langBtn.setAttribute('aria-expanded','false');});
+    b.addEventListener('click',()=>{const L=b.getAttribute('data-lang');applyLang(L);try{localStorage.setItem('sz-lang',L);}catch(e){}langWrap.classList.remove('open');langBtn.setAttribute('aria-expanded','false');});
   });
   document.addEventListener('click',e=>{if(langWrap&&!langWrap.contains(e.target)){langWrap.classList.remove('open');langBtn.setAttribute('aria-expanded','false');}});
 }
 const subBtn=document.getElementById('subBtn');
 if(subBtn){subBtn.addEventListener('click',()=>{const inp=subBtn.previousElementSibling; if(inp) inp.value=''; subBtn.textContent=contactThanks;});}
-applyLang('en');
+function pickLang(){
+  var sup=Object.keys(I18N), saved=null;
+  try{saved=localStorage.getItem('sz-lang');}catch(e){}
+  if(saved&&sup.indexOf(saved)>-1) return saved;
+  var prefs=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||'en'];
+  for(var i=0;i<prefs.length;i++){
+    var base=String(prefs[i]||'').toLowerCase().split('-')[0];
+    if(sup.indexOf(base)>-1) return base;
+  }
+  return 'en';
+}
+applyLang(pickLang());
 
 </script>
 <script>
