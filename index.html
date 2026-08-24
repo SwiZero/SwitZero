@@ -834,7 +834,7 @@ footer .legal{font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;col
 <footer>
   <span class="logo"><span class="cross" aria-hidden="true"></span><span class="word">SwitZero<span class="reg">®</span></span></span>
   <span class="legal" data-i18n="ftr.legal">© 2026 SwitZero · Conçu en Suisse</span>
-  <span class="site-ver" aria-hidden="true">V2.139</span>
+  <span class="site-ver" aria-hidden="true">V2.140</span>
 </footer>
 
 <script>
@@ -1100,5 +1100,6 @@ applyLang(pickLang());
 <script>(function(){var lastW=window.innerWidth;function setVH(){document.documentElement.style.setProperty('--vh',(window.innerHeight*0.01)+'px');}setVH();window.addEventListener('orientationchange',function(){setTimeout(setVH,150);},{passive:true});window.addEventListener('resize',function(){if(window.innerWidth!==lastW){lastW=window.innerWidth;setVH();}},{passive:true});})();</script>
 <script>(function(){var w=document.getElementById('boxWrap');if(!w)return;w.addEventListener('click',function(){var o=w.classList.toggle('open');w.setAttribute('aria-expanded',o?'true':'false');});})();</script>
 <script>(function(){var h=document.getElementById('hd');if(!h)return;function setH(){var was=h.classList.contains('scrolled');h.classList.add('scrolled');var hh=h.offsetHeight;if(!was)h.classList.remove('scrolled');document.documentElement.style.setProperty('--hdr',hh+'px');}setH();window.addEventListener('resize',setH,{passive:true});window.addEventListener('load',setH);})();</script>
+<script>(function(){var h=document.getElementById('hd');function hdrH(){if(!h)return 0;var was=h.classList.contains('scrolled');h.classList.add('scrolled');var v=h.offsetHeight;if(!was)h.classList.remove('scrolled');return v;}document.addEventListener('click',function(e){var t0=e.target;if(!t0||!t0.closest)return;var a=t0.closest('a[href^="#"]');if(!a)return;var id=a.getAttribute('href');if(!id||id.length<2)return;var el=null;try{el=document.querySelector(id);}catch(err){return;}if(!el)return;e.preventDefault();var y=el.getBoundingClientRect().top+window.pageYOffset-hdrH()-6;if(y<0)y=0;window.scrollTo({top:y,behavior:'smooth'});if(window.history&&history.replaceState)history.replaceState(null,'',id);});})();</script>
 </body>
 </html>
