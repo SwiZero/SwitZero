@@ -832,7 +832,7 @@ footer .legal{font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;col
 
 <footer>
   <span class="legal" data-i18n="ftr.legal">© 2026 SwitZero</span><span class="legal-addr" data-i18n="ftr.addr">1814 La Tour-de-Peilz · Suisse</span>
-  <span class="site-ver" aria-hidden="true">V2.278</span>
+  <span class="site-ver" aria-hidden="true">V2.279</span>
 </footer></div></div>
 
 <script>
@@ -855,7 +855,7 @@ addEventListener('scrollend',hSnapBack,{passive:true});  // repli (desktop / tra
 const io=new IntersectionObserver(es=>es.forEach(e=>{
   if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}
 }),{threshold:.18});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+document.querySelectorAll('.reveal').forEach(el=>{if(!el.closest('.endwrap'))io.observe(el);});
 
 // touillette : sort à l'arrivée dans la section + à chaque changement de couleur
 const cfgSection=document.getElementById('configurateur');
@@ -1215,6 +1215,6 @@ window.szBtnRelease=function(dur){
 };
 function toggleSugar(){R.classList.toggle('sz-brown');}var sac=document.querySelector('.sachet');if(sac){sac.style.cursor='pointer';sac.setAttribute('role','button');sac.setAttribute('aria-label','Sucre blanc ou brun');var sacBusy=false;sac.addEventListener('click',function(){if(sacBusy)return;sacBusy=true;R.classList.add('sz-tuck');window.szBtnLock();if(window.pulseStick)window.pulseStick();setTimeout(function(){toggleSugar();},470);setTimeout(function(){R.classList.remove('sz-tuck');window.szBtnRelease(1150);},620);setTimeout(function(){sacBusy=false;},1750);});}var w=document.getElementById('boxWrap');if(w){var busy=false;w.addEventListener('click',function(){if(busy)return;busy=true;R.classList.add('sz-tuck');window.szBtnLock();w.classList.add('tuck');w.classList.remove('open');setTimeout(function(){toggleSugar();},540);setTimeout(function(){R.classList.remove('sz-tuck');w.classList.remove('tuck');void w.offsetWidth;w.classList.add('open');window.szBtnRelease(900);busy=false;},760);});}})();</script>
 <script>(function(){var b=document.querySelector('.buy-btn');if(!b)return;b.addEventListener('click',function(e){if(document.documentElement.classList.contains('sz-soon')){e.preventDefault();}});})();</script>
-<script>(function(){var ew=document.querySelector('.endwrap'),pg=document.querySelector('.page'),hd=document.getElementById('hd');if(!ew||!pg)return;var d=0,lw=0;function hdrH(){if(!hd)return 72;var was=hd.classList.contains('scrolled'),pv=hd.style.transition;hd.style.transition='none';hd.classList.add('scrolled');void hd.offsetHeight;var v=hd.offsetHeight;if(!was)hd.classList.remove('scrolled');void hd.offsetHeight;hd.style.transition=pv;return v;}function fit(){ew.style.marginTop='';ew.style.paddingBottom='';d=Math.max(0,window.innerHeight-hdrH());lw=window.innerWidth;check();}function check(){var released=ew.classList.contains('released');var pageBottom=pg.offsetTop+pg.offsetHeight;var trigger=pageBottom-hdrH();if(window.pageYOffset>=trigger){if(!released){ew.classList.add('released');pg.style.marginBottom='0px';}}else{if(released){ew.classList.remove('released');}pg.style.marginBottom=d+'px';}}fit();window.addEventListener('load',fit);window.addEventListener('scroll',check,{passive:true});window.addEventListener('orientationchange',function(){setTimeout(fit,220);},{passive:true});window.addEventListener('resize',function(){if(window.innerWidth!==lw)fit();},{passive:true});})();</script>
+<script>(function(){var ew=document.querySelector('.endwrap'),pg=document.querySelector('.page'),hd=document.getElementById('hd');if(!ew||!pg)return;var d=0,lw=0;function hdrH(){if(!hd)return 72;var was=hd.classList.contains('scrolled'),pv=hd.style.transition;hd.style.transition='none';hd.classList.add('scrolled');void hd.offsetHeight;var v=hd.offsetHeight;if(!was)hd.classList.remove('scrolled');void hd.offsetHeight;hd.style.transition=pv;return v;}function fit(){ew.style.marginTop='';ew.style.paddingBottom='';d=Math.max(0,window.innerHeight-hdrH());lw=window.innerWidth;check();}var shown=false;function reveal(){if(shown)return;shown=true;var els=ew.querySelectorAll('.reveal');for(var i=0;i<els.length;i++){(function(el,k){setTimeout(function(){el.classList.add('in');},k*110);})(els[i],i);}}function check(){var released=ew.classList.contains('released');var pageBottom=pg.offsetTop+pg.offsetHeight;var trigger=pageBottom-hdrH();if(window.pageYOffset>pageBottom-window.innerHeight+90)reveal();if(window.pageYOffset>=trigger){if(!released){ew.classList.add('released');pg.style.marginBottom='0px';}}else{if(released){ew.classList.remove('released');}pg.style.marginBottom=d+'px';}}fit();window.addEventListener('load',fit);window.addEventListener('scroll',check,{passive:true});window.addEventListener('orientationchange',function(){setTimeout(fit,220);},{passive:true});window.addEventListener('resize',function(){if(window.innerWidth!==lw)fit();},{passive:true});})();</script>
 </body>
 </html>
