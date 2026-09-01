@@ -835,7 +835,7 @@ footer .legal{font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;col
 
 <footer>
   <span class="legal" data-i18n="ftr.legal">© 2026 SwitZero</span><span class="legal-addr" data-i18n="ftr.addr">1814 La Tour-de-Peilz · Suisse</span>
-  <span class="site-ver" aria-hidden="true">V2.312</span>
+  <span class="site-ver" aria-hidden="true">V2.314</span>
 </footer></div></div>
 
 <script>
@@ -883,6 +883,7 @@ function cmyk2hex(c,m,y,k){
   return '#'+h(r)+h(g)+h(b);
 }
 function cqVal(id){var el=document.getElementById(id);return el?parseInt(el.value,10)||0:0;}
+function cqCode(p){return 'C'+cqVal(p+'C')+'M'+cqVal(p+'M')+'Y'+cqVal(p+'Y')+'K'+cqVal(p+'K');}
 function cqLabel(p){return 'C '+cqVal(p+'C')+' · M '+cqVal(p+'M')+' · Y '+cqVal(p+'Y')+' · K '+cqVal(p+'K');}
 
 
@@ -968,7 +969,8 @@ if(genBtn){
         window.szArmDownload({bg:cfgBgHex,logo:cfgLogoHex,
           seal:br0?'#B4844B':'#FBFAF6',sealh:br0?'#9C6E39':'#E7E2D6',
           engrave:'#B49E78',deposit:br0?'#E3C489':'#EEF1F0',
-          custom:false,bgq:cqLabel('sa'),logoq:cqLabel('lo'),
+          custom:false,file:'SwitZero_sachet-'+cqCode('sa')+'_logo-'+cqCode('lo')+'.png',
+          bgq:cqLabel('sa'),logoq:cqLabel('lo'),
           sealq:br0?'Sucre brun':'Sucre blanc'});
       }
       return;
@@ -985,7 +987,8 @@ if(genBtn){
       window.szArmDownload({bg:cfgBgHex,logo:cfgLogoHex,
         seal:brown?'#B4844B':'#FBFAF6',sealh:brown?'#9C6E39':'#E7E2D6',
         engrave:'#B49E78',deposit:brown?'#E3C489':'#EEF1F0',
-        custom:cfgCustomized,bgq:cqLabel('sa'),logoq:cqLabel('lo'),
+        custom:cfgCustomized,file:'SwitZero_sachet-'+cqCode('sa')+'_logo-'+cqCode('lo')+'.png',
+        bgq:cqLabel('sa'),logoq:cqLabel('lo'),
         sealq:brown?'Sucre brun':'Sucre blanc'});
     }
   });
@@ -1264,6 +1267,23 @@ function sachetSVG(vals){
   return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(st);
 }
 
+function dimH(c,x1,x2,y,txt){
+  c.strokeStyle='rgba(47,48,43,.42)';c.lineWidth=1.2;
+  c.beginPath();c.moveTo(x1,y);c.lineTo(x2,y);
+  c.moveTo(x1,y-8);c.lineTo(x1,y+8);c.moveTo(x2,y-8);c.lineTo(x2,y+8);c.stroke();
+  c.font='400 17px Jost,Helvetica,Arial,sans-serif';
+  var w=c.measureText(txt).width,mx=(x1+x2)/2;
+  c.fillStyle='#F2EFE6';c.fillRect(mx-w/2-9,y-11,w+18,22);
+  c.fillStyle='#A89F8E';c.fillText(txt,mx-w/2,y+6);}
+function dimV(c,y1,y2,x,txt){
+  c.strokeStyle='rgba(47,48,43,.42)';c.lineWidth=1.2;
+  c.beginPath();c.moveTo(x,y1);c.lineTo(x,y2);
+  c.moveTo(x-8,y1);c.lineTo(x+8,y1);c.moveTo(x-8,y2);c.lineTo(x+8,y2);c.stroke();
+  c.save();c.translate(x,(y1+y2)/2);c.rotate(-Math.PI/2);
+  c.font='400 17px Jost,Helvetica,Arial,sans-serif';
+  var w=c.measureText(txt).width;
+  c.fillStyle='#F2EFE6';c.fillRect(-w/2-9,-11,w+18,22);
+  c.fillStyle='#A89F8E';c.fillText(txt,-w/2,6);c.restore();}
 function paint(c,vals,img){
   var L=SH[(document.documentElement.lang||'fr').slice(0,2)]||SH.fr;
   c.fillStyle=CREAM;c.fillRect(0,0,W,H);
@@ -1302,11 +1322,13 @@ function paint(c,vals,img){
     tr(c,'SwitZero',sx+1150*k,sy+130*k,2*k);
     var w2=trw(c,'SwitZero',2*k);c.font=F(400,15*k);
     c.fillText('®',sx+1150*k+w2+4*k,sy+(130-18)*k);}
+  dimH(c,sx,sx+sw,sy+sh+34,'15 cm');
+  dimV(c,sy,sy+sh,sx+sw+34,'2 cm');
   c.fillStyle=TAUPE;c.font=F(400,19);
-  tr(c,L.prev,sx,sy+sh+44,3.4);
+  tr(c,L.prev,sx,sy+sh+76,3.4);
 
   /* touillette aux proportions réelles : 13,5 cm × 6,5 mm */
-  var tw=sw*135/150,th=tw*6.5/135,ty=sy+sh+96;
+  var tw=sw*135/150,th=tw*6.5/135,ty=sy+sh+124;
   var g=c.createLinearGradient(0,ty,0,ty+th);
   g.addColorStop(0,'#EFE6D4');g.addColorStop(.5,'#E2D4BB');g.addColorStop(1,'#CBB894');
   c.fillStyle=g;c.beginPath();c.roundRect(sx,ty,tw,th,th/2);c.fill();
@@ -1317,11 +1339,13 @@ function paint(c,vals,img){
   c.fillText('SwitZero',sx+tw*0.09,ty+th*0.68);
   var wg=c.measureText('SwitZero').width;c.font=F(400,th*0.2,'Cormorant Garamond,Georgia,serif');
   c.fillText('®',sx+tw*0.09+wg+th*0.05,ty+th*0.44);
+  dimH(c,sx,sx+tw,ty+th+30,'13,5 cm');
+  dimV(c,ty,ty+th,sx+tw+34,'6,5 mm');
   c.fillStyle=TAUPE;c.font=F(400,19);
-  tr(c,L.stir,sx,ty+th+44,3.4);
+  tr(c,L.stir,sx,ty+th+70,3.4);
 
   /* nuancier */
-  var cy=ty+th+108;
+  var cy=ty+th+122;
   c.fillStyle=PINE;c.font=F(500,23);tr(c,L.col,sx,cy,4.2);
   function chip(x,col,lab,q,ob){
     c.fillStyle=col;
@@ -1338,7 +1362,7 @@ function paint(c,vals,img){
   /* palettisation : vue de dessus + élévation */
   var py=cy+282;
   c.fillStyle=PINE;c.font=F(500,23);tr(c,L.pal,sx,py,4.2);
-  var y0=py+42, PW=430, PD=PW*800/1200;
+  var y0=py+42, PW=360, PD=PW*800/1200;
   /* vue de dessus : 5 × 2 cartons, remplissage exact */
   c.fillStyle='#E4DCC9';c.fillRect(sx,y0,PW,PD);
   c.strokeStyle='rgba(47,48,43,.34)';c.lineWidth=1.6;c.strokeRect(sx,y0,PW,PD);
@@ -1349,10 +1373,12 @@ function paint(c,vals,img){
     c.strokeStyle='rgba(47,48,43,.3)';c.lineWidth=1.2;c.strokeRect(bx+2,by+2,bw-4,bd-4);
     c.strokeStyle='rgba(47,48,43,.14)';c.lineWidth=1;
     c.beginPath();c.moveTo(bx+2,by+bd/2);c.lineTo(bx+bw-2,by+bd/2);c.stroke();}
+  dimH(c,sx,sx+PW,y0+PD+28,'120 cm');
+  dimV(c,y0,y0+PD,sx+PW+34,'80 cm');
   c.fillStyle=TAUPE;c.font=F(400,17);
-  tr(c,L.palTop,sx,y0+PD+34,2.8);
+  tr(c,L.palTop,sx,y0+PD+66,2.8);
   /* élévation : 6 niveaux */
-  var ex=sx+PW+92, EW=PW, rh=26, base=y0+6*rh;
+  var ex=sx+PW+150, EW=PW, rh=26, base=y0+6*rh;
   for(var r=0;r<6;r++){for(var q2=0;q2<5;q2++){
     var ax=ex+q2*(EW/5),ay=y0+r*rh;
     c.fillStyle=(r+q2)%2?'#EFE9DB':'#F5F1E6';c.fillRect(ax,ay,EW/5,rh);
@@ -1362,12 +1388,14 @@ function paint(c,vals,img){
   for(var b2=0;b2<3;b2++){var bx2=ex+b2*(EW-46)/2;
     c.fillRect(bx2,base+19,46,20);c.strokeRect(bx2,base+19,46,20);}
   c.fillRect(ex,base+39,EW,11);c.strokeRect(ex,base+39,EW,11);
+  dimV(c,y0,base+50,ex+EW+34,'134,4 cm');
+  dimV(c,y0,base,ex-34,'120 cm');
   c.fillStyle=TAUPE;c.font=F(400,17);
-  tr(c,L.palSide,ex,y0+PD+34,2.8);
+  tr(c,L.palSide,ex,y0+PD+66,2.8);
   c.font=F(400,19);
-  tr(c,L.palA,sx,y0+PD+82,3.4);
-  tr(c,L.palB,sx,y0+PD+114,3.4);
-  tr(c,L.palC,sx,y0+PD+146,3.4);
+  tr(c,L.palA,sx,y0+PD+112,3.4);
+  tr(c,L.palB,sx,y0+PD+144,3.4);
+  tr(c,L.palC,sx,y0+PD+176,3.4);
 
   /* colonne technique */
   var X=M+1210,Y=M+235,LH=34;
@@ -1403,6 +1431,6 @@ window.szSheet=function(vals,done){
 };
 })();</script>
 
-<script>(function(){var b=document.getElementById('genBtn');if(!b)return;var DL={en:'Download',fr:'Télécharger',de:'Herunterladen',es:'Descargar',it:'Scarica',ja:'ダウンロード',zh:'下载',ru:'Скачать',ar:'تنزيل',ko:'다운로드',pt:'Descarregar',nl:'Downloaden'};var GEN=b.textContent.trim(),last=null,busy=false;function lang(){return (document.documentElement.lang||'fr').slice(0,2);}window.szResetBtn=function(){if(!b.classList.contains('dl'))return;b.classList.remove('dl');b.setAttribute('data-i18n','cfg.gen');b.textContent=GEN;};window.szArmDownload=function(v){last=v;GEN=b.classList.contains('dl')?GEN:b.textContent.trim();b.classList.add('dl');b.removeAttribute('data-i18n');b.textContent=DL[lang()]||DL.fr;};b.addEventListener('click',function(e){if(!b.classList.contains('dl')||!last||!window.szSheet||busy)return;e.preventDefault();e.stopImmediatePropagation();busy=true;window.szSheet(last,function(cv){cv.toBlob(function(bl){var u=URL.createObjectURL(bl),a=document.createElement('a');a.href=u;a.download='SwitZero-fiche-technique.png';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(u);a.remove();busy=false;if(window.szResetBtn)window.szResetBtn();},1200);},'image/png');});},true);})();</script>
+<script>(function(){var b=document.getElementById('genBtn');if(!b)return;var DL={en:'Download',fr:'Télécharger',de:'Herunterladen',es:'Descargar',it:'Scarica',ja:'ダウンロード',zh:'下载',ru:'Скачать',ar:'تنزيل',ko:'다운로드',pt:'Descarregar',nl:'Downloaden'};var GEN=b.textContent.trim(),last=null,busy=false;function lang(){return (document.documentElement.lang||'fr').slice(0,2);}window.szResetBtn=function(){if(!b.classList.contains('dl'))return;b.classList.remove('dl');b.setAttribute('data-i18n','cfg.gen');b.textContent=GEN;};window.szArmDownload=function(v){last=v;GEN=b.classList.contains('dl')?GEN:b.textContent.trim();b.classList.add('dl');b.removeAttribute('data-i18n');b.textContent=DL[lang()]||DL.fr;};b.addEventListener('click',function(e){if(!b.classList.contains('dl')||!last||!window.szSheet||busy)return;e.preventDefault();e.stopImmediatePropagation();busy=true;window.szSheet(last,function(cv){cv.toBlob(function(bl){var u=URL.createObjectURL(bl),a=document.createElement('a');a.href=u;a.download=(last&&last.file)||'SwitZero-fiche-technique.png';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(u);a.remove();busy=false;if(window.szResetBtn)window.szResetBtn();},1200);},'image/png');});},true);})();</script>
 </body>
 </html>
