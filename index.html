@@ -836,7 +836,7 @@ var SZK=/[?&#]k=[0-9]{24}[wb]/.test(location.href);function top(){window.scrollT
 
 <footer>
   <span class="legal" data-i18n="ftr.legal">© 2026 SwitZero</span><span class="legal-addr" data-i18n="ftr.addr">1814 La Tour-de-Peilz · Suisse</span>
-  <span class="site-ver" aria-hidden="true">V3.012</span>
+  <span class="site-ver" aria-hidden="true">V3.013</span>
 </footer></div></div>
 
 <script>
@@ -1343,7 +1343,7 @@ function paint(c,vals,img,img2){
     tr(c,'SwitZero',sx+1150*k,sy+130*k,2*k);
     var w2=trw(c,'SwitZero',2*k);c.font=F(400,15*k);
     c.fillText('®',sx+1150*k+w2+4*k,sy+(130-18)*k);}
-  dimH(c,sx,sx+sw,sy+sh+30,'16 cm',IM('6.3 in'));
+  dimH(c,sx,sx+sw,sy+sh+30,'16,5 cm',IM('6.5 in'));
   dimV(c,sy,sy+sh,sx+sw+34,'2 cm',IM('0.8 in'));
   c.fillStyle=TAUPE;c.font=F(400,18);
   tr(c,L.prev,sx,sy+sh+64,3.2);
@@ -1382,7 +1382,7 @@ function paint(c,vals,img,img2){
   tr(c,L.verso,sx,vy+sh+38,3.2);
 
   /* touillette aux proportions réelles : 14 cm × 7 mm */
-  var tw=sw*140/160,th=tw*7/140,ty=vy+sh+70;
+  var tw=sw*140/165,th=tw*7/140,ty=vy+sh+70;
   var g=c.createLinearGradient(0,ty,0,ty+th);
   g.addColorStop(0,'#EFE6D4');g.addColorStop(.5,'#E2D4BB');g.addColorStop(1,'#CBB894');
   c.fillStyle=g;c.beginPath();c.roundRect(sx,ty,tw,th,th/2);c.fill();
