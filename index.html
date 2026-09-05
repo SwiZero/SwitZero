@@ -836,7 +836,7 @@ var SZK=/[?&#]k=[0-9]{24}[wb]/.test(location.href);function top(){window.scrollT
 
 <footer>
   <span class="legal" data-i18n="ftr.legal">© 2026 SwitZero</span><span class="legal-addr" data-i18n="ftr.addr">1814 La Tour-de-Peilz · Suisse</span>
-  <span class="site-ver" aria-hidden="true">V3.046</span>
+  <span class="site-ver" aria-hidden="true">V3.047</span>
 </footer></div></div>
 
 <script>
@@ -959,7 +959,7 @@ function cfgRestoreDefault(){
   var sp=document.querySelector('.cfg-specs'); if(sp) sp.classList.remove('custom');
 }
 window.szResetPreset=function(){cfgBgHex='#E3D9C6';cfgLogoHex='#2F302B';cfgApply();cfgRestoreDefault();if(pickSachet)pickSachet.textContent=cqLabel('sa');if(pickLogo)pickLogo.textContent=cqLabel('lo');pulseStick();if(window.szResetBtn)window.szResetBtn();};
-window.szApplyPreset=function(bgHex,logoHex){cfgBgHex=bgHex;cfgLogoHex=logoHex;cfgApply();cfgRestoreDefault();if(pickSachet)pickSachet.textContent=cqLabel('sa');if(pickLogo)pickLogo.textContent=cqLabel('lo');pulseStick();if(window.szArmDownload){var br=document.documentElement.classList.contains('sz-brown');var pay=['saC','saM','saY','saK','loC','loM','loY','loK'].map(function(q){return ('00'+cqVal(q)).slice(-3);}).join('')+(br?'b':'w');window.szArmDownload({bg:cfgBgHex,logo:cfgLogoHex,seal:br?'#B4844B':'#FBFAF6',sealh:br?'#9C6E39':'#E7E2D6',engrave:'#B49E78',deposit:br?'#E3C489':'#EEF1F0',custom:false,pay:pay,file:'SwitZero_sachet-'+cqCode('sa')+'_logo-'+cqCode('lo')+'_'+(document.documentElement.lang||'fr').slice(0,2).toUpperCase()+'.png',bgq:cqLabel('sa'),logoq:cqLabel('lo'),sealq:br?'Sucre brun':'Sucre blanc'});}};
+window.szApplyPreset=function(bgHex,logoHex){cfgBgHex=bgHex;cfgLogoHex=logoHex;cfgApply();cfgRestoreDefault();if(pickSachet)pickSachet.textContent=cqLabel('sa');if(pickLogo)pickLogo.textContent=cqLabel('lo');pulseStick();if(window.szArmDownload){var br=document.documentElement.classList.contains('sz-brown');var pay=['saC','saM','saY','saK','loC','loM','loY','loK'].map(function(q){return ('00'+cqVal(q)).slice(-3);}).join('')+(br?'b':'w');window.szArmDownload({bg:cfgBgHex,logo:cfgLogoHex,seal:br?'#B4844B':'#FBFAF6',sealh:br?'#9C6E39':'#E7E2D6',engrave:cfgLogoHex,deposit:br?'#E3C489':'#EEF1F0',custom:false,pay:pay,file:'SwitZero_sachet-'+cqCode('sa')+'_logo-'+cqCode('lo')+'_'+(document.documentElement.lang||'fr').slice(0,2).toUpperCase()+'.png',bgq:cqLabel('sa'),logoq:cqLabel('lo'),sealq:br?'Sucre brun':'Sucre blanc'});}};
 var genBtn=document.getElementById('genBtn');
 if(genBtn){
   genBtn.addEventListener('animationend',function(){genBtn.classList.remove('wrong');});
@@ -978,7 +978,7 @@ if(genBtn){
         var pay0='000000000000000000000000'+(br0?'b':'w');
         window.szArmDownload({bg:cfgBgHex,logo:cfgLogoHex,
           seal:br0?'#B4844B':'#FBFAF6',sealh:br0?'#9C6E39':'#E7E2D6',
-          engrave:'#B49E78',deposit:br0?'#E3C489':'#EEF1F0',
+          engrave:cfgLogoHex,deposit:br0?'#E3C489':'#EEF1F0',
           custom:false,pay:pay0,file:'SwitZero_sachet-'+cqCode('sa')+'_logo-'+cqCode('lo')+'_'+(document.documentElement.lang||'fr').slice(0,2).toUpperCase()+'.png',
           bgq:cqLabel('sa'),logoq:cqLabel('lo'),
           sealq:br0?'Sucre brun':'Sucre blanc'});
@@ -998,7 +998,7 @@ if(genBtn){
         return ('00'+cqVal(q)).slice(-3);}).join('')+(brown?'b':'w');
       window.szArmDownload({bg:cfgBgHex,logo:cfgLogoHex,
         seal:brown?'#B4844B':'#FBFAF6',sealh:brown?'#9C6E39':'#E7E2D6',
-        engrave:'#B49E78',deposit:brown?'#E3C489':'#EEF1F0',
+        engrave:cfgLogoHex,deposit:brown?'#E3C489':'#EEF1F0',
         custom:cfgCustomized,pay:pay,file:'SwitZero_sachet-'+cqCode('sa')+'_logo-'+cqCode('lo')+'_'+(document.documentElement.lang||'fr').slice(0,2).toUpperCase()+'.png',
         bgq:cqLabel('sa'),logoq:cqLabel('lo'),
         sealq:brown?'Sucre brun':'Sucre blanc'});
@@ -1044,7 +1044,7 @@ const logoSwatchBox=document.getElementById('logoSwatches');
 let cfgCustomized=false, cfgLogoHex='#2F302B', cfgBgHex='#E3D9C6';
 function cfgLum(h){h=h.replace('#','');const r=parseInt(h.substr(0,2),16)/255,g=parseInt(h.substr(2,2),16)/255,b=parseInt(h.substr(4,2),16)/255;const f=x=>x<=.03928?x/12.92:Math.pow((x+.055)/1.055,2.4);return .2126*f(r)+.7152*f(g)+.0722*f(b);}
 function cfgContrast(a,b){const L1=cfgLum(a),L2=cfgLum(b);return (Math.max(L1,L2)+.05)/(Math.min(L1,L2)+.05);}
-function cfgApply(){if(!cfgRecto)return;const dark=cfgLum(cfgBgHex)<0.45,ink=dark?'#F2EFE6':'#2F302B';const host=document.getElementById('cfgSachet')||cfgRecto;const faces=[host,cfgRecto,document.getElementById('cfgVerso')];for(let i=0;i<faces.length;i++){const el=faces[i];if(!el)continue;const st=el.style;st.setProperty('--bg',cfgBgHex);st.setProperty('--ink',ink);st.setProperty('--accent',dark?'#E0989C':'#7A1E23');st.setProperty('--engrave',dark?'#CBB89A':'#B49E78');st.setProperty('--logo',cfgLogoHex);}}
+function cfgApply(){if(!cfgRecto)return;const dark=cfgLum(cfgBgHex)<0.45,ink=dark?'#F2EFE6':'#2F302B';const host=document.getElementById('cfgSachet')||cfgRecto;const faces=[host,cfgRecto,document.getElementById('cfgVerso')];for(let i=0;i<faces.length;i++){const el=faces[i];if(!el)continue;const st=el.style;st.setProperty('--bg',cfgBgHex);st.setProperty('--ink',ink);st.setProperty('--accent',dark?'#E0989C':'#7A1E23');st.setProperty('--engrave',cfgLogoHex);st.setProperty('--logo',cfgLogoHex);}}
 function cfgCustomize(){if(!cfgCustomized){cfgCustomized=true;if(cfgWm)cfgWm.textContent='Your Logo';if(cfgMtn)cfgMtn.style.display='none';if(cfgBrand)cfgBrand.style.display='';const sp=document.querySelector('.cfg-specs');if(sp)sp.classList.add('custom');}}
 function cfgSelectSwatch(box,hex){if(!box)return;box.querySelectorAll('.swatch').forEach(s=>s.setAttribute('aria-pressed',String((s.dataset.hex||'').toLowerCase()===hex.toLowerCase())));}
 function cfgAutoLogo(){if(cfgContrast(cfgLogoHex,cfgBgHex)>=1.6)return;const dark=cfgLum(cfgBgHex)<0.45;const pick=RAL.find(c=>c.hex===(dark?'#DCCDB7':'#2F302B'));if(!pick)return;cfgLogoHex=pick.hex;if(pickLogo)pickLogo.textContent=pick.name+' · '+pick.ral;cfgSelectSwatch(logoSwatchBox,pick.hex);}
